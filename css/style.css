@@ -1,0 +1,27 @@
+*{
+    text-align: center;
+}
+body{
+    background-image: url("http://images.fandango.com/images/fandangoblog/hogwartsschoolpotter.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#header{
+    padding:30px 100px 30px 100px;
+    background-color: grey; 
+    opacity:.9;    
+}
+#start{
+    padding: 30px 100px 30px 100px;
+    font-size:70px;    
+}
+.btn{
+    display:none;
+}
+#question{
+    padding:10px 100px 30px 100px;
+    background-color: grey; 
+    opacity:.9;
+    display: none;    
+}
+
