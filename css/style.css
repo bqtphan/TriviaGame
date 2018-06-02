@@ -7,21 +7,37 @@ body{
     background-repeat: no-repeat;
 }
 #header{
-    padding:30px 100px 30px 100px;
+    padding:20px 100px 20px 100px;
     background-color: grey; 
     opacity:.9;    
+    margin-bottom:20px;
 }
 #start{
     padding: 30px 100px 30px 100px;
     font-size:70px;    
 }
+
 .btn{
-    display:none;
+	padding: 30px 200px 30px 200px;
+	
 }
 #question{
-    padding:10px 100px 30px 100px;
+    padding:20px 100px 20px 100px;
     background-color: grey; 
     opacity:.9;
     display: none;    
+	margin-bottom:20px;
 }
-
+h3{
+	padding:20px 50px 20px 50px;
+    background-color: grey; 
+    opacity:.9;
+	margin-top:20px;
+}
+.picture{
+    display: none;
+    height: 200px;
+}
+#answer{
+	display:none;
+}
