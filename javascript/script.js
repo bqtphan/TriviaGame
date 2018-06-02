@@ -5,10 +5,39 @@ var wrongCount = 0;
 $("#correctCount").text(correctCount);
 $("#wrongCount").text(wrongCount);
 
-var questionArray = ["The three kinds of balls used in Quidditch are Bludgers, Snitches, and...", "What does the spell Obliviate do?", "What does Ron see in the Mirror of Erised?", "Who is NOT a member of the Order of the Phoenix?", "What does O.W.L. stand for?", "Which is not a horcrux of Voldemort?", "Who is the author of A History of Magic?", "How many Weasley siblings are there?", "Who teaches flying lessons?", "Which ingredient is NOT found in the Polyjuice Potion?"];
-var answerArray = [["Foozies", "Wiffles", "Sockeys", "Quaffles"], ["Destroys the target object", "Removes part of target's memory", "Makes targets levitate", "Sends target reeling backwards"], ["Himself as a Prefect", "Himself kissing Hermione", "Himself with bags of Galleons", "Himself holding the Quidditch cup"], ["Cornelius Fudge", "Severus Snape", "Mundungus Fletcher", "Kingsley Shacklebolt"], ["Ordinary Wizarding Level", "Official Wizarding Law", "Outstanding Wizarding License", "Ordinary Wizarding Learning"], ["Marvolo Gaunt's Ring", "Helga Hufflepuff's Cup", "Dumbledore's Elder Wand", "Rowena Ravenclaw's Diadem"], ["Wendelin the Weird", "Bathilda Bagshot", "Gellert Grindelwald", "Beedle the Bard"], ["5", "7", "9", "13"], ["Madam Hooch", "Professor Grubbly-Plank", "Sybill Trelawney", "Charity Burbage"], ["Lacewing flies", "Powdered Bicorn horn", "Crushed bezoar", "Shredded Boomslang skin"]];
-var correctArray = ["Quaffles", "Removes part of target's memory", "Himself holding the Quidditch cup", "Cornelius Fudge", "Ordinary Wizarding Level", "Dumbledore's Elder Wand", "Bathilda Bagshot", "7", "Madam Hooch", "Crushed bezoar"];
+var questionArray = ["The three kinds of balls used in Quidditch are Bludgers, Snitches, and..."
+	, "What does the spell Obliviate do?"
+	, "What does Ron see in the Mirror of Erised?"
+	, "Who is NOT a member of the Order of the Phoenix?"
+	, "What does O.W.L. stand for?"
+	, "Which is not a horcrux of Voldemort?"
+	, "Who is the author of A History of Magic?"
+	, "How many Weasley siblings are there?"
+	, "Who teaches flying lessons?"
+	, "Which ingredient is NOT found in the Polyjuice Potion?"];
+var answerArray = [["Foozies", "Wiffles", "Sockeys", "Quaffles"]
+	, ["Destroys the target object", "Removes part of target's memory", "Makes targets levitate", "Sends target reeling backwards"]
+	, ["Himself as a Prefect", "Himself kissing Hermione", "Himself with bags of Galleons", "Himself holding the Quidditch cup"]
+	, ["Cornelius Fudge", "Severus Snape", "Mundungus Fletcher", "Kingsley Shacklebolt"]
+	, ["Ordinary Wizarding Level", "Official Wizarding Law", "Outstanding Wizarding License", "Ordinary Wizarding Learning"]
+	, ["Marvolo Gaunt's Ring", "Helga Hufflepuff's Cup", "Dumbledore's Elder Wand", "Rowena Ravenclaw's Diadem"]
+	, ["Wendelin the Weird", "Bathilda Bagshot", "Gellert Grindelwald", "Beedle the Bard"]
+	, ["5", "7", "9", "13"]
+	, ["Madam Hooch", "Professor Grubbly-Plank", "Sybill Trelawney", "Charity Burbage"]
+	, ["Lacewing flies", "Powdered Bicorn horn", "Crushed bezoar", "Shredded Boomslang skin"]];
+var correctArray = ["Quaffles"
+	, "Removes part of target's memory"
+	, "Himself holding the Quidditch cup"
+	, "Cornelius Fudge"
+	, "Ordinary Wizarding Level"
+	, "Dumbledore's Elder Wand"
+	, "Bathilda Bagshot"
+	, "7"
+	, "Madam Hooch"
+	, "Crushed bezoar"];
 var i = 0;
+
+//	SCRIPT
 
 $("#start").on("click", function () {
 	$("#start").hide();
@@ -22,13 +51,14 @@ $(".picture").on("click", function () {
 	run();
 });
 
+// FUNCTIONS
+
 function run() {
 	generateQuestion(i);
-	console.log(i);
 	for (var j = 0; j < 4; j++) {
 		generateAnswers(i, j);
 	}
-	check(i);
+	runTimer();
 }
 
 function generateQuestion(i) {
@@ -48,22 +78,45 @@ function generateAnswers(i, j) {
 	$("#answer").append(makeAnswers);
 }
 
-function check(i) {
-	$("#answer").on("click", ".btn", function () {
-		var checkAnswer = $(this).attr("answer");
+//	BINDING PERFORMS A CHECK UPON ANSWER CHOICE CLICK
+$("#answer").on("click", ".btn", function () {
+	var checkAnswer = $(this).attr("answer");
+	$(".btn").hide();
+	$("#answer").hide();
+	stop();
+	$("#question").text("Click the below to continue");
+	if (checkAnswer === correctArray[i]) {
+		$("#winImage").show();
+		correctCount++;
+		$("#correctCount").text(correctCount);
+	}
+	else {
+		$("#loseImage").show();
+		wrongCount++;
+		$("#wrongCount").text(wrongCount);
+	}
+});
+
+
+//	TIMER
+var time = 100;
+var timer;
+function runTimer() {
+	stop();
+	var time = 100;
+	$("#header").html("<h2>Time Left: " + time + "</h2>");
+	timer = setInterval(decrement, 100);
+}
+function decrement() {
+	time--;
+	$("#header").html("<h2>Time Left: " + time + "</h2>");
+	if (time === 0) {
 		$(".btn").hide();
 		$("#answer").hide();
-		$("#question").text("Click the below image to continue");
-		console.log(checkAnswer);
-		if (checkAnswer === correctArray[i]) {
-			$("#winImage").show();
-			correctCount++;
-			$("#correctCount").text(correctCount);
-		}
-		else {
-			$("#loseImage").show();
-			wrongCount++;
-			$("#wrongCount").text(wrongCount);
-		}
-	});
+		$("#question").hide();
+		alert("Time Up!");
+	}
+}
+function stop() {
+	clearInterval(timer);
 }
